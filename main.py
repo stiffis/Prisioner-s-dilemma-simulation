@@ -1,14 +1,12 @@
 import random
 
-# Define payoff matrix
 PAYOFFS = {
-    ("C", "C"): (3, 3),  # Both cooperate
-    ("C", "D"): (0, 5),  # Player 1 cooperates, Player 2 defects
-    ("D", "C"): (5, 0),  # Player 1 defects, Player 2 cooperates
-    ("D", "D"): (1, 1),  # Both defect
+    ("C", "C"): (3, 3),  
+    ("C", "D"): (0, 5),  
+    ("D", "C"): (5, 0),  
+    ("D", "D"): (1, 1),  
 }
 
-# Define strategies
 def always_cooperate(history, opponent_history):
     return "C"
 
@@ -42,7 +40,6 @@ def win_stay_lose_shift(history, opponent_history):
         return "C"
     my_last, opp_last = history[-1], opponent_history[-1]
     return my_last if PAYOFFS[(my_last, opp_last)][0] >= 3 else ("C" if my_last == "D" else "D")
-# List of strategies
 strategies = [
     always_cooperate,
     always_defect,
@@ -55,7 +52,6 @@ strategies = [
     win_stay_lose_shift,
 ]
 
-# Run the tournament
 def play_round(strategy1, strategy2, history1, history2):
     move1 = strategy1(history1, history2)
     move2 = strategy2(history2, history1)
@@ -77,7 +73,6 @@ def tournament(strategies, rounds=1000):
                 scores[strat2.__name__] += payoff2
     return scores
 
-# Run and display results
 results = tournament(strategies)
 print("Final Scores:")
 for strategy, score in sorted(results.items(), key=lambda x: x[1], reverse=True):
